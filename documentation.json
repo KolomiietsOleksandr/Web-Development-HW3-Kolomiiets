@@ -1,0 +1,55 @@
+{
+  "endpoints": [
+    {
+      "route": "/",
+      "methods": ["GET"],
+      "description": "Returns the main page of the application."
+    },
+    {
+      "route": "/analyze",
+      "methods": ["POST"],
+      "description": "Accepts text data or file and returns metadata.",
+      "parameters": {
+        "file": "File to process (optional)",
+        "string": "Text data to process (optional)",
+        "search_string": "String to search in the text data (optional)"
+      },
+      "response": {
+        "metadata": {
+          "length": "Length of the whole text",
+          "alphanumeric_symbols": "Amount of alphanumeric symbols",
+          "occurrences": "Number of occurrences of the search string in the text"
+        }
+      }
+    },
+    {
+      "route": "/analyze-url",
+      "methods": ["POST"],
+      "description": "Accepts URL and returns metadata about it.",
+      "parameters": {
+        "url": "URL to analyze"
+      },
+      "response": {
+        "result": {
+          "protocol": "Protocol of the URL",
+          "domain": "Domain of the URL",
+          "path_steps": "Steps in the path to the resource",
+          "query_parameters": "Query parameters of the URL"
+        },
+        "error": "Error message if URL is invalid or not found"
+      }
+    },
+    {
+      "route": "/images/<path:image_path>",
+      "methods": ["GET"],
+      "description": "Returns the image if it exists, otherwise returns an error message.",
+      "parameters": {
+        "image_path": "Path to the image file"
+      },
+      "response": {
+        "image": "Image file (if exists)",
+        "error": "Error message if image file is not found"
+      }
+    }
+  ]
+}

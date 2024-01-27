@@ -7,7 +7,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def initial():
-    return 'Main page'
+    with open('documentation.json', 'r') as file:
+        documentation = file.read()
+    return documentation, 200, {'Content-Type': 'application/json'}
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
