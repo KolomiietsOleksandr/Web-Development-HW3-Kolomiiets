@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from handlers.textHandler import process_metadata
+from handlers.urlHandlers import analyze_url_meta
 
 app = Flask(__name__)
 
@@ -25,6 +26,19 @@ def analyze():
         return jsonify(metadata)
     else:
         return 'No search_string provided in the request'
+
+@app.route('/analyze-url', methods=['POST'])
+def analyze_url_endpoint():
+    url = request.form.get('url')
+    if not url:
+        return jsonify({'error': 'No URL provided in the request'})
+
+    try:
+        result = analyze_url_meta(url)
+        return jsonify({'result': result})
+    except Exception as e:
+        return jsonify({'error': f"The provided string '{url}' doesn't look like a valid URL. Error: {str(e)}"})
+
 
 if __name__ == '__main__':
     app.run()
