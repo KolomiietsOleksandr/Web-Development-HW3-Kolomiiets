@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from handlers.textHandler import process_metadata
 from handlers.urlHandlers import analyze_url_meta
+from handlers.imgHandler import handle_image_request
 
 app = Flask(__name__)
 
@@ -39,6 +40,9 @@ def analyze_url_endpoint():
     except Exception as e:
         return jsonify({'error': f"The provided string '{url}' doesn't look like a valid URL. Error: {str(e)}"})
 
+@app.route('/images/<path:image_path>')
+def get_image(image_path):
+    return handle_image_request(image_path)
 
 if __name__ == '__main__':
     app.run()
